@@ -1,6 +1,5 @@
 <script lang="ts">
     export let parameterValue;
-    console.log(parameterValue);
 </script>
 
 <table>

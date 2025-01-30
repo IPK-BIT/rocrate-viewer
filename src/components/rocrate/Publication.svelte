@@ -31,9 +31,12 @@
                 </ul>
             </td>
         </tr>
+        {#if publication.status}
         <tr>
             <th>Status</th>
             <td>{publication['status']['annotationValue']}</td>
+        </tr>
+        {/if}
     </tbody>
 </table>
 

@@ -37,7 +37,7 @@
             <td>
                 <ul>
                     {#each protocol.components as component}
-                    <li>{component}</li>
+                    <li>{component.category}: {component.value}</li>
                     {/each}
                 </ul>
             </td>

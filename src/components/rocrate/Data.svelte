@@ -3,13 +3,13 @@
 </script>
 
 <table>
-    <thead>
-        <tr>
-            <th style="width: 20%"></th>
-            <th>{data.name}</th>
-        </tr>        
-    </thead>
     <tbody>
+        {#if data.name}
+        <tr>
+            <th>Name</th>
+            <td>{data.name}</td>
+        </tr>
+        {/if}
         {#if data.type}
         <tr>
             <th>Type</th>
@@ -31,7 +31,13 @@
         {#if data.comments}
         <tr>
             <th>Comments</th>
-            <td>{data.comments}</td>
+            <td>
+                <ul>
+                    {#each data.comments as comment}
+                    <li>{JSON.stringify(comment)}</li>
+                    {/each}
+                </ul>  
+            </td>
         </tr>
         {/if}
     </tbody>
