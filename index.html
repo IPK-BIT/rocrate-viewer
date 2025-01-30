@@ -6,10 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="application/ld+json">
       {
-        "@context": "https://schema.org",
+        "@context": {
+        	"sdo": "https://schema.org",
+            "bioschemas": "https://bioschemas.org",
+            "dct": "http://purl.org/dc/terms"
+        },
         "@type": "SoftwareApplication",
         "@id": "https://ipk-bit.github.io/ro-crate-viewer/",
-        "http://purl.org/dc/terms/conformsTo": {
+        "dct:conformsTo": {
           "@id": "https://bioschmas.org/profiles/ComputationalTool/1.0-RELEASE",
           "@type": "CreativeWork"
         },
@@ -26,7 +30,7 @@
         "citation": "https://github.com/IPK-BIT/ro-crate-viewer",
         "featureList": [
           "http://edamontology.org/operation_2422",
-          "http://edamontology.org/operation_1812",
+          "http://edamontology.org/operation_1812"
         ],
         "license": "https://spdx.org/licenses/MIT",
         "softwareVersion": "0.1.0",
@@ -36,7 +40,7 @@
           "ARC",
           "RO-Crate",
           "Visualization"
-        ],
+        ]
       }
     </script>
     <title>RO-Crate Viewer</title>   
