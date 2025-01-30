@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+title: RO-Crate Viewer
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Manuel
+    family-names: Feser
+    email: feser@ipk-gatersleben.de
+    name-particle: Manuel
+    affiliation: >-
+      Leibniz Institute of Plant Genetics and Crop Plant
+      Research
+    orcid: 'https://orcid.org/0000-0001-6546-1818'
+repository-code: 'https://github.com/IPK-BIT/rocrate-viewer'
+url: 'https://ipk-bit.github.io/rocrate-viewer/'
+abstract: >-
+  The RO-Crate Viewer provides a graphical user interface to
+  explore the contents of an ARC RO-Crate Meatadata JSON
+  file. It is meant as a visualization tool and therefore
+  does not allow any modifications on the data.
+keywords:
+  - ARC
+  - RO-Crate
+  - Visualization
+license: MIT
+version: 0.1.0

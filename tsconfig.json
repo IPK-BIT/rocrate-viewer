@@ -1,0 +1,26 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+		// "moduleResolution": "Node",
+		// "target": "ESNext",
+		// "module": "ESNext",
+		"verbatimModuleSyntax": true,
+		// "isolatedModules": true,
+		// "resolveJsonModule": true,
+		// "sourceMap": true,
+		// "esModuleInterop": true,
+		// "skipLibCheck": true,
+		// "forceConsistentCasingInFileNames": true,
+		// "checkJs": true,
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"]
+		}
+  },
+  "exclude": ["node_modules"],
+  "include": ["src"]
+}

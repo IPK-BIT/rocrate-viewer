@@ -1,0 +1,143 @@
+:root {
+  --primary-h: 191;
+  --primary-s: 71%;
+  --primary-l: 52%;
+  --primary: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
+  --on-primary: #000;
+  
+  --secondary-h: 151;
+  --secondary-s: 71%;
+  --secondary-l: 52%;
+  --secondary: hsl(var(--secondary-h), var(--secondary-s), var(--secondary-l));
+  
+  --accent-h: 108;
+  --accent-s: 83%;
+  --accent-l: 47%;
+  --accent: hsl(var(--accent-h), var(--accent-s), var(--accent-l));
+  
+  --error-h: 354;
+  --error-s: 70%;
+  --error-l: 54%;
+  --error: hsl(var(--error-h), var(--error-s), var(--error-l));
+
+  --warning-h: 45;
+  --warning-s: 3%;
+  --warning-l: 0%;
+  --warning: hwb(var(--warning-h), var(--warning-s), var(--warning-l));
+
+  --info-h: 188;
+  --info-s: 78%;
+  --info-l: 41%;
+  --info: hsl(var(--info-h), var(--info-s), var(--info-l));
+
+  --success-h: 134;
+  --success-s: 61%;
+  --success-l: 41%;
+  --success: hsl(var(--success-h), var(--success-s), var(--success-l));
+
+  --neutral-h: 0;
+  --neutral-s: 0%;
+  --neutral-l: 95%;
+  --neutral: hsl(var(--neutral-h), var(--neutral-s), var(--neutral-l));
+}
+
+body {
+  margin: 0;
+}
+
+.card {
+  background-color: var(--neutral);
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+.bg-base-100 {
+  background-color: var(--base-100);
+}
+
+.card-side {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 1.5rem;
+}
+
+.shadow-xl {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.btn-primary:hover {
+  background-color: hsl(var(--primary-h), var(--primary-s), calc(var(--primary-l)*0.8));
+}
+
+.btn-ghost {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.font-medium {
+  font-size: medium;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table {
+  width: fit-content;
+}
+
+th {
+  text-align: left;
+  padding: .5rem;
+}
+
+td {
+  padding: .5rem;
+  text-align: left;
+}
+
+.modal-link {
+    text-align: left;
+    cursor: pointer;
+    text-decoration: underline dashed var(--info);
+    padding: 0;
+}
+
+select {
+    padding: .5rem;
+    border-radius: 5px;
+    margin: .5rem 0;
+}
