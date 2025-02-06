@@ -10,7 +10,11 @@
             <img src="/rocrate-viewer/rocrate.png" alt="RO-Crate logo" />
         </div>
         <div class="header__title">
+            {#if $rocrate['about']['title'].length>47 || $rocrate['about']['identifier'].length > 50}
+            <h1 title={$rocrate['about']['title']?$rocrate['about']['title']:$rocrate['about']['identifier']}>{($rocrate['about']['title']?$rocrate['about']['title']:$rocrate['about']['identifier']).slice(0, 50)}...</h1>
+            {:else}
             <h1>{$rocrate['about']['title']?$rocrate['about']['title']:$rocrate['about']['identifier']}</h1>
+            {/if}
         </div>
     </div>
     <div class="header__menu">
@@ -19,6 +23,7 @@
             <li><button class="btn-ghost font-medium" on:click={()=>{$rocrateLevel = 'people'}}>People</button></li>
             <li><button class="btn-ghost font-medium" on:click={()=>{$rocrateLevel = 'studies'}}>Studies</button></li>
             <li><button class="btn-ghost font-medium" on:click={()=>{$rocrateLevel = 'assays'}}>Assays</button></li>
+            <li><button class="btn-ghost font-medium" on:click={()=>{$rocrateLevel = 'ontologies'}}>Ontologies</button></li>
         </ul>
     </div>
 </div>

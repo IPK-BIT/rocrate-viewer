@@ -6,12 +6,14 @@
     import ComponentWrapper from "@/components/general/ComponentWrapper.svelte";
 
     import { rocrateLevel } from '@/stores/rocrate';
+    import Ontologies from "@/components/pages/Ontologies.svelte";
 
     const components: any = {
         'investigation': Investigation,
         'people': People,
         'studies': Studies,
-        'assays': Assays
+        'assays': Assays,
+        'ontologies': Ontologies
     }
 </script>
 

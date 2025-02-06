@@ -1,5 +1,6 @@
 <script lang="ts">
     import Modal from "@/components/general/Modal.svelte";
+    import OntologyAnnotation from "@/components/rocrate/OntologyAnnotation.svelte";
     import Person from "@/components/rocrate/Person.svelte";
 
     export let publication;
@@ -11,6 +12,8 @@
     }
 
     let focussedAuthor = publication['authorList'][0];
+
+    console.log(publication);
 </script>
 
 <table>
@@ -34,12 +37,16 @@
         {#if publication.status}
         <tr>
             <th>Status</th>
-            <td>{publication['status']['annotationValue']}</td>
+            <td><button class="btn-ghost modal-link" on:click={()=>document.getElementById('annotation-modal').showModal()}>{publication['status']['annotationValue']}</button></td>
         </tr>
         {/if}
     </tbody>
 </table>
-
+<Modal id="annotation-modal">
+    {#if publication.status}
+        <OntologyAnnotation ontologyAnnotation={publication['status']} />
+    {/if}
+</Modal>
 <Modal id="person-modal">
     <Person person={focussedAuthor} />
 </Modal>
