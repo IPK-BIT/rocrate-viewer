@@ -5,7 +5,7 @@
 
 <div style="padding: 1rem;">
     {#if $rocrate}
-    <Investigation investigation={$rocrate['about']}/>
+    <Investigation investigation={$rocrate['@graph'].find(n=>{return n['@id']==='./'})}/>
     {/if}
 </div>
 

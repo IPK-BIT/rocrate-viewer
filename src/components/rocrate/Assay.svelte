@@ -5,10 +5,11 @@
     import Person from "@/components/rocrate/Person.svelte";
     import Process from "@/components/rocrate/Process.svelte";
     import PropertyValue from "@/components/rocrate/PropertyValue.svelte";
+    import ProtocollProcesses from "@/components/rocrate/ProtocollProcesses.svelte";
+    import { rocrate } from "@/stores/rocrate";
 
     export let assay;
 
-    let selectedProcess;
 
     let focussedAnnotation;
     function focusAnnotation(item) {
@@ -23,9 +24,37 @@
     }
 
     let activeTab = 0;
+
+    let selectedProcess;
+
+    let processGroups = [];
+
+    function fillProcessGroups(s) {
+        selectedProcess = undefined;
+        let tmp = [];
+        if (s.about) {
+            // Check if assay.about is an array
+            if (Array.isArray(s.about)) {
+            s.about.forEach(process => {
+                let p = $rocrate['@graph'].find(n=>{return n['@id']===process['@id']});
+                if (!tmp.includes(p['executesLabProtocol']['@id'])) {
+                    tmp = [...tmp, p['executesLabProtocol']['@id']]
+                }
+            });    
+            } else {
+            // If it's not an array, just add the single process
+            tmp = [$rocrate['@graph'].find(n=>{return n['@id']===s.about['@id']})['executesLabProtocol']['@id']];
+            }
+            
+        }
+        return tmp;
+    }
+
+    $: processGroups = fillProcessGroups(assay);
 </script>
 
 <section>
+
 
 <table style="width: 100%">
     <tbody>
@@ -53,13 +82,13 @@
             <td><button class="btn-ghost modal-link" on:click={()=>focusAnnotation(assay.technologyPlatform)}>{assay.technologyPlatform.annotationValue}</button></td>
         </tr>
         {/if}
-        {#if assay.performers}
+        {#if assay.creator}
         <tr>
             <th>Performers</th>
             <td>
                 <div class="horizontal-list">
-                    {#each assay.performers as performer}
-                    <button class="label" on:click={()=>focusPerformer(performer['@id'])}>{performer.firstName} {performer.lastName}</button>
+                    {#each assay.creator as performer}
+                    <button class="label" on:click={()=>focusPerformer(performer['@id'])}>{$rocrate['@graph'].find(n=>{return n['@id'] === performer['@id']})['givenName']} {$rocrate['@graph'].find(n=>{return n['@id'] === performer['@id']})['familyName']}</button>
                     {/each}
                 </div>                
             </td>
@@ -71,10 +100,10 @@
             <td>{JSON.stringify(assay.comments, null, 2)}</td>
         </tr>
         {/if}
-        {#if assay.filename}
+        {#if assay['@id']}
         <tr>
             <th>Filename</th>
-            <td>{assay.filename}</td>
+            <td>{assay['@id']}isa.assay.xlsx</td>
         </tr>
         {/if}
     </tbody>
@@ -101,25 +130,31 @@
 </div>
 <div class="tab-content">  
     {#if activeTab==0}
-        {#if assay.processSequence}
-            {#if assay.processSequence.length == 1}
-            <Process process={assay.processSequence[0]} />
+        {#if processGroups}
+            {#if assay.about.length == 1}
+            <Process process={assay.about[0]} />
             {:else}
                 <select bind:value={selectedProcess}>
-                    <option disabled selected>Select a process</option>
-                    {#each assay.processSequence as process}
-                    <option>{process.name}</option>    
+                    <option disabled selected>Select a protocol</option>
+                    {#each processGroups as process}
+                    <option value={$rocrate['@graph'].find(n=>{return n['@id']===process})}>{$rocrate['@graph'].find(n=>{return n['@id']===process})['name']}</option>    
                     {/each}
                 </select>
                 {#if selectedProcess}
-                <Process process={assay.processSequence.find(process => process.name === selectedProcess)} />
+                {#await $rocrate['@graph'].filter(n=>{return n['executesLabProtocol'] && n['executesLabProtocol']['@id']===selectedProcess['@id']})}
+                    <p></p>
+                {:then processDetails}
+                    <ProtocollProcesses processes={processDetails} />
+                {:catch error}
+                    <p>Error loading process: {error.message}</p>
+                {/await}
                 {/if}
             {/if}
         {/if}
     {:else if activeTab==1}
-        {#if assay.dataFiles}
+        {#if assay.hasPart}
         <div class="file-list">
-            {#each assay.dataFiles as dataFile}
+            {#each assay.hasPart as dataFile}
             <Data data={dataFile} />
             {/each}    
         </div>

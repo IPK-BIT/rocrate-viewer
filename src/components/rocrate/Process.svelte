@@ -37,7 +37,11 @@
     let paginationSize = 10;
 </script>
 
-{#if process}
+<pre>
+    {JSON.stringify(process, null, 2)}
+</pre>
+
+<!-- {#if process}
     <div class="container">
         <table>
             <thead>
@@ -61,7 +65,6 @@
                                     {input.name}
                                 </button>
                             </td>
-                            <!-- <td>{JSON.stringify(input, null, 2)}</td> -->
                             {#if process.executesProtocol}
                                 <td>
                                     <button class="btn-ghost modal-link" on:click={() => document.getElementById("protocol-modal",).showModal()}>
@@ -92,7 +95,6 @@
                                     {process.outputs[i].name}
                                 </button>
                             </td>
-                            <!-- <td>{JSON.stringify(process.outputs[i], null, 2)}</td> -->
                         </tr>
                     {/if}
                 {/each}
@@ -102,7 +104,7 @@
             <Pagination totalCount={process.inputs.length} bind:page bind:paginationSize/>
         {/if}
     </div>
-{/if}
+{/if} -->
 <Modal id="source-modal">
     {#if focussedSource}
         <Source source={focussedSource} />

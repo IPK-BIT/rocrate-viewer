@@ -2,7 +2,7 @@
     import Study from '@/components/rocrate/Study.svelte';
     import { rocrate, rocrateLevel } from '@/stores/rocrate';
 
-    let studies = $rocrate['about']['studies'];
+    let studies = $rocrate['@graph'].filter(n=>{return n['additionalType'] == 'Study'});
 
     let study;
     function focusStudy(studyId: string) {
@@ -14,7 +14,7 @@
     <ul>
     {#each studies as study}
         <li>
-            <button class="btn-ghost font-medium" on:click={()=>focusStudy(study['@id'])}>{study['title']?study['title']:study['identifier']}</button>
+            <button class="btn-ghost font-medium" on:click={()=>focusStudy(study['@id'])}>{study['name']?study['name']:study['identifier']}</button>
         </li>
     {/each}
     </ul>

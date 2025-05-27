@@ -15,4 +15,4 @@ function createAppStateStore() {
 	};
 }
 
-export const hans = createAppStateStore();
+export const state = createAppStateStore();

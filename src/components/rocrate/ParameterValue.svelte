@@ -4,16 +4,16 @@
 
 <table>
     <tbody>
-        {#if 'category' in parameterValue}
+        {#if 'name' in parameterValue}
         <tr>
-            <th>Category</th>
-            <td>{parameterValue.category}</td>
+            <th>Parameter Name</th>
+            <td>{parameterValue.name}</td>
         </tr>
         {/if}
-        {#if 'categoryCode' in parameterValue}
+        {#if 'propertyID' in parameterValue}
         <tr>
-            <th>Category Code</th>
-            <td>{parameterValue.categoryCode}</td>
+            <th>Paramter ID</th>
+            <td>{parameterValue.propertyID}</td>
         </tr>
         {/if}
         {#if 'value' in parameterValue}
@@ -22,10 +22,10 @@
             <td>{parameterValue.value}</td>
         </tr>
         {/if}
-        {#if 'unit' in parameterValue}
+        {#if 'unitText' in parameterValue}
         <tr>
             <th>Unit</th>
-            <td>{parameterValue.unit}</td>
+            <td>{parameterValue.unitText}</td>
         </tr>
         {/if}
         {#if 'unitCode' in parameterValue}

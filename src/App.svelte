@@ -2,12 +2,12 @@
     import Header from "@/components/general/Header.svelte";
     import InitView from "@/components/general/InitView.svelte";
     import MainView from "@/components/general/MainView.svelte";
-    import { hans } from "@/stores/appstate";
+    import { state } from "@/stores/appstate";
     // import { rocrate } from "@/stores/rocrate";
 </script>
 
 <main>
-  {#if $hans === hans.INIT}
+  {#if $state === state.INIT}
   <InitView/>
   {:else}
   <Header/>

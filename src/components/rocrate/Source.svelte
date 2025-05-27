@@ -1,6 +1,7 @@
 <script lang="ts">
     import Modal from "@/components/general/Modal.svelte";
     import PropertyValue from "@/components/rocrate/PropertyValue.svelte";
+    import { rocrate } from "@/stores/rocrate";
 
     let focussedCharacteristic;
     function focusCharacteristic(characteristic) {
@@ -19,15 +20,28 @@
             <td>{source.name}</td>
         </tr>
         {/if}
-        {#if source.characteristics}
+        {#if source.additionalProperty}
         <tr>
             <th>Characteristics</th>
             <td>
-                <ul>
-                    {#each source.characteristics as characteristic}
-                    <li class="list-none"><button class="btn-ghost modal-link" on:click={()=>focusCharacteristic(characteristic)}>{characteristic.category}: {characteristic.value}</button></li>
+                <table style="border: 0;">
+                        <tbody>
+                    {#each source.additionalProperty as characteristic}
+                    <tr>
+                    {#await $rocrate['@graph'].find(n => { return n['@id'] == characteristic['@id'] })}
+                        <td>Loading...</td>
+                    {:catch error}
+                        <td>Error: {error.message}</td>
+                    {:then characteristicDetails}
+                        <td style="border: 0; border-bottom: 1px solid black;">{characteristicDetails.name}</td>
+                        <td style="border: 0; border-bottom: 1px solid black;">
+                            <button class="btn-ghost modal-link" onclick={()=>focusCharacteristic(characteristicDetails)}>{characteristicDetails.value}</button>
+                        </td>
+                    {/await}
+                    </tr>
                     {/each}
-                </ul>
+                        </tbody>
+                </table>
             </td>
         </tr>
         {/if}

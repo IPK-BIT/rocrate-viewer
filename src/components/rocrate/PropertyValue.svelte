@@ -4,16 +4,16 @@
 
 <table>
     <tbody>
-        {#if propertyValue.category}
+        {#if propertyValue.name}
         <tr>
-            <th>Category</th>
-            <td>{propertyValue.category}</td>
+            <th>Property Name</th>
+            <td>{propertyValue.name}</td>
         </tr>
         {/if}
-        {#if propertyValue.categoryCode}
+        {#if propertyValue.propertyID}
         <tr>
-            <th>Category Code</th>
-            <td>{propertyValue.categoryCode}</td>
+            <th>Property ID</th>
+            <td>{propertyValue.propertyID}</td>
         </tr>
         {/if}
         {#if propertyValue.description}
@@ -34,10 +34,10 @@
             <td>{propertyValue.value}</td>
         </tr>
         {/if}
-        {#if propertyValue.valueCode}
+        {#if propertyValue.valueReference}
         <tr>
-            <th>Value Code</th>
-            <td>{propertyValue.valueCode}</td>
+            <th>Value Reference</th>
+            <td>{propertyValue.valueReference}</td>
         </tr>
         {/if}
         {#if propertyValue.unit}

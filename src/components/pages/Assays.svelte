@@ -3,12 +3,12 @@
     import Study from '@/components/rocrate/Study.svelte';
     import { rocrate, rocrateLevel } from '@/stores/rocrate';
 
-    let assays = [];
-    for(const study of $rocrate['about'].studies) {
-        if (study.assays) {
-            assays = [...assays, ...study.assays];            
-        }
-    }
+    let assays = $rocrate['@graph'].filter(n=>{return n['additionalType'] == 'Assay'});
+    // for(const study of $rocrate['about'].studies) {
+    //     if (study.assays) {
+    //         assays = [...assays, ...study.assays];            
+    //     }
+    // }
 
     let assay;
     function focusAssay(assayId: string) {
@@ -17,20 +17,20 @@
 </script>
 
 <div class="grid">
-    <ul>
-    {#each $rocrate['about'].studies as study}
-    <li><button class="btn-ghost font-medium" style="cursor: default; color: #666">{study.title?study.title:study.identifier}</button></li>
-    {#if study['assays']}
+    <!-- <ul> -->
+    <!-- {#each $rocrate['about'].studies as study} -->
+    <!-- <li><button class="btn-ghost font-medium" style="cursor: default; color: #666">{study.title?study.title:study.identifier}</button></li> -->
+    <!-- {#if study['assays']} -->
         <ul>
-        {#each study['assays'] as assay}    
+        {#each assays as assay}    
             <li>
                 <button class="btn-ghost font-medium" on:click={()=>focusAssay(assay['@id'])}>{assay['title']?assay['title']:assay['identifier']}</button>
             </li>
         {/each}
         </ul>
-    {/if}
-    {/each}
-    </ul>
+    <!-- {/if} -->
+    <!-- {/each} -->
+    <!-- </ul> -->
 
     <section>
 

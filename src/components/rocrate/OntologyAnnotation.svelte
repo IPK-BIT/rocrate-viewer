@@ -1,25 +1,21 @@
 <script>
+    import { rocrate } from "@/stores/rocrate";
+
     export let ontologyAnnotation;
 </script>
 
 <table>
     <tbody>
-        {#if ontologyAnnotation.annotationValue}
+        {#if ontologyAnnotation.name}
         <tr>
             <th>Annotation Value</th>
-            <td>{ontologyAnnotation['annotationValue']}</td>
+            <td>{ontologyAnnotation['name']}</td>
         </tr>
         {/if}
-        {#if ontologyAnnotation.termSource}
-        <tr>
-            <th>Term Source</th>
-            <td>{ontologyAnnotation['termSource']}</td>
-        </tr>
-        {/if}
-        {#if ontologyAnnotation.termAccession}
+        {#if ontologyAnnotation.termCode}
         <tr>
             <th>Term Accession</th>
-            <td>{ontologyAnnotation['termAccession']}</td>
+            <td>{ontologyAnnotation['termCode']}</td>
         </tr>
         {/if}
     </tbody>

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { hans } from "@/stores/appstate";
+    import { state } from "@/stores/appstate";
     import { rocrate } from "@/stores/rocrate";
 
 
@@ -13,7 +13,7 @@
 					let lines = (e.target as FileReader).result as string;
 					let json = JSON.parse(lines);
 					$rocrate = json;
-					$hans = hans.GUI;
+					$state = state.GUI;
 				}
 			};
 

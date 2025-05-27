@@ -2,11 +2,12 @@
     import Modal from "@/components/general/Modal.svelte";
     import OntologyAnnotation from "@/components/rocrate/OntologyAnnotation.svelte";
     import Organization from "@/components/rocrate/Organization.svelte";
+    import { rocrate } from "@/stores/rocrate";
 
     let showModal = false;
 
     function openRoleDescription(idx: int) {
-        focussedRole = person['roles'][idx];
+        focussedRole = $rocrate['@graph'].find(n => { return n['@id'] == idx });
         document.getElementById("role-modal").showModal()
     }
     let focussedRole;
@@ -16,22 +17,16 @@
 
 <table>
     <tbody>
-        {#if 'firstName' in person}
+        {#if 'givenName' in person}
         <tr>
             <th>First Name</th>
-            <td>{person['firstName']}</td>
+            <td>{person['givenName']}</td>
         </tr>
         {/if}
-        {#if 'lastName' in person}
+        {#if 'familyName' in person}
         <tr>
             <th>Last Name</th>
-            <td>{person['lastName']}</td>
-        </tr>
-        {/if}
-        {#if 'name' in person}
-        <tr>
-            <th>Name</th>
-            <td>{person['name']}</td>
+            <td>{person['familyName']}</td>
         </tr>
         {/if}
         {#if 'email' in person}
@@ -40,10 +35,10 @@
             <td>{person['email']}</td>
         </tr>
         {/if}
-        {#if 'orcid' in person}
+        {#if person['@id'].includes('orcid.org')}
         <tr>
             <th>ORCID</th>
-            <td>{person['orcid']}</td>
+            <td>{person['@id']}</td>
         </tr>
         {/if}
         {#if 'affiliation' in person}
@@ -52,25 +47,43 @@
             <td>
                 <ul>
                     <li class="list-none modal-link">
-                        <button class="btn-ghost modal-link" on:click={()=>document.getElementById('affiliation-modal').showModal()}>{person['affiliation']['name']}</button>
+                        {#await $rocrate['@graph'].find(n=>{return n['@id']==person['affiliation']['@id']})}
+                            <p></p>
+                        {:then affiliation}
+                            <button class="btn-ghost modal-link" on:click={()=>document.getElementById('affiliation-modal').showModal()}>{affiliation['name']}</button>
+                        {:catch error}
+                            <p>Error loading affiliation: {error.message}</p>
+                        {/await}
                     </li>
                 </ul>
             </td>
         </tr>
         {/if}
-        {#if person['roles']}
+        {#if person['jobTitle']}
         <tr>
             <th>Roles</th>
             <td>
-                <ul>
-                    {#each person['roles'] as role, i}
-                        <li class="list-none">
-                            <button class="btn-ghost modal-link" on:click={()=>openRoleDescription(i)}>{role['annotationValue']}</button>
-                        </li>
-                    {/each}
-                </ul>
+                {#await $rocrate['@graph'].find(n=>{return n['@id']==person['jobTitle']['@id']})}
+                    <p></p>
+                {:then role}
+                    <button class="btn-ghost modal-link" on:click={()=>openRoleDescription(role['@id'])}>{role['name']}</button>
+                {:catch error}
+                    <p>Error loading role: {error.message}</p>
+                {/await}
             </td>
-        </tr>
+        </tr>        
+        {/if}
+        {#if person['address']}
+            <tr>
+                <th>Address</th>
+                <td>{person['address']}</td>
+            </tr>
+        {/if}
+        {#if person['telephone']}
+            <tr>
+                <th>Telephone</th>
+                <td>{person['telephone']}</td>
+            </tr>
         {/if}
     </tbody>
 </table>
@@ -83,7 +96,13 @@
 
 <Modal bind:isOpen={showModal} id="affiliation-modal">
     {#if person['affiliation']}
-    <Organization organization={person['affiliation']}/>
+    {#await $rocrate['@graph'].find(n=>{return n['@id']==person['affiliation']['@id']})}
+        <p></p>
+    {:then affiliation}
+        <Organization organization={affiliation}/>
+    {:catch error}
+        <p>Error loading affiliation: {error.message}</p>
+    {/await}
     {/if}
 </Modal>
 

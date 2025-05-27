@@ -1,45 +1,57 @@
 <script lang="ts">
+    import { rocrate } from "@/stores/rocrate";
+
     export let data;
 </script>
 
 <table>
     <tbody>
-        {#if data.name}
+    {#await $rocrate['@graph'].find(n=>{return n['@id'] === data['@id']})}
+        <tr>
+            <td colspan="2">Loading...</td>
+        </tr>
+    {:catch error}
+        <tr>
+            <td colspan="2">Error: {error.message}</td>
+        </tr>        
+    {:then datafile}         
+        {#if datafile.name}
         <tr>
             <th>Name</th>
-            <td>{data.name}</td>
+            <td>{datafile.name}</td>
         </tr>
         {/if}
-        {#if data.type}
+        {#if datafile.type}
         <tr>
             <th>Type</th>
-            <td>{data.type}</td>
+            <td>{datafile.type}</td>
         </tr>
         {/if}
-        {#if data.encodingFormat}
+        {#if datafile.encodingFormat}
         <tr>
             <th>Encoding Format</th>
-            <td>{data.encodingFormat}</td>
+            <td>{datafile.encodingFormat}</td>
         </tr>
         {/if}
-        {#if data.usageInfo}
+        {#if datafile.usageInfo}
         <tr>
             <th>Usage Info</th>
-            <td>{data.usageInfo}</td>
+            <td>{datafile.usageInfo}</td>
         </tr>
         {/if}
-        {#if data.comments}
+        {#if datafile.comments}
         <tr>
             <th>Comments</th>
             <td>
                 <ul>
-                    {#each data.comments as comment}
+                    {#each datafile.comments as comment}
                     <li>{JSON.stringify(comment)}</li>
                     {/each}
                 </ul>  
             </td>
         </tr>
         {/if}
+    {/await}
     </tbody>
 </table>
 
